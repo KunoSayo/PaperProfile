@@ -140,6 +140,10 @@ public class PaperAttribute implements IPaperAttribute {
         node.getNode("item").setValue(TypeTokens.ITEM_SNAPSHOT_TOKEN, itemStackSnapshot);
     }
 
+    /**
+     * 获得属性显示的文本
+     * @return text
+     */
     public Text getText() {
         return getText(null);
     }
@@ -196,6 +200,11 @@ public class PaperAttribute implements IPaperAttribute {
         return display;
     }
 
+    /**
+     * 格式化成value的属性【带变量解析】
+     * @param playerConfig 应获得哪个玩玩的属性
+     * @return text
+     */
     public Text format(IPlayerConfig playerConfig) {
         String parsed = PaperDataConfig.parse(playerConfig, display);
         return LanguageManager.format(parsed, getText(playerConfig));

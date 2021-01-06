@@ -11,8 +11,12 @@ import ninja.leaping.configurate.objectmapping.ObjectMappingException;
 import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.entity.living.player.User;
+import org.spongepowered.api.service.pagination.PaginationList;
+import org.spongepowered.api.text.Text;
 import org.spongepowered.api.util.Identifiable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -87,9 +91,26 @@ public class GameMasterCommand {
             })
             .build();
     static final CommandSpec LIST = CommandSpec.builder()
+            .arguments(GenericArguments.choices(of("what"), () -> ImmutableList.of("attribute", "buff"), s -> s),
             .executor((src, args) -> {
                 if (src instanceof Identifiable) {
-                    return success();
+                    if (PluginConfig.isGm(((Identifiable) src).getUniqueId())) {
+                        String what = args.<String>getOne("what").orElseThrow(IllegalArgumentException::new);
+                        PaginationList.Builder builder = PaginationList.builder()
+                                .title(of("属性"))
+                                .padding(of("-"));
+                        List<Text> textList = new ArrayList<>();
+                        if ("attribute".equals(what)) {
+                            for (PaperAttribute value : PaperDataConfig.attributes.values()) {
+                                textList.add(value.getText());
+                            }
+                        } else {
+                            for (PaperBuff value : PaperDataConfig.buffs.values()) {
+                                textList.add(value.getText());
+                            }
+                        }
+                        builder.contents(textList).build().sendTo(src);
+                    }
                 }
                 return empty();
             })
@@ -174,5 +195,6 @@ public class GameMasterCommand {
     static final CommandSpec GM = CommandSpec.builder()
             .child(JOIN, "join")
             .child(LEAVE, "leave")
+            .child(LIST, "list")
             .build();
 }
