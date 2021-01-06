@@ -36,6 +36,11 @@ public class OptionNumber implements IOptionNumber {
         return isConst ? c : value.getAttribute(attribute).getValueN();
     }
 
+    @Override
+    public String getInfo(IPlayerConfig value) {
+        return isConst ? String.valueOf(c) : (value == null ? "属性值: " + attribute.getName() : value.getAttribute(attribute).getValue());
+    }
+
     void saveTo(CommentedConfigurationNode node) {
         if (isConst) {
             node.setValue(c);

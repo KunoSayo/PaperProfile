@@ -68,6 +68,11 @@ public interface IPlayerConfig {
         public boolean save() {
             return false;
         }
+
+        @Override
+        public boolean hasBuff(IPaperBuff buff) {
+            return false;
+        }
     };
 
     String getName();
@@ -91,4 +96,6 @@ public interface IPlayerConfig {
     UUID getUUID();
 
     boolean save();
+
+    boolean hasBuff(IPaperBuff buff);
 }

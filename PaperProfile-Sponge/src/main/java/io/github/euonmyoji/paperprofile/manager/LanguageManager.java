@@ -59,6 +59,13 @@ public final class LanguageManager {
         return getText(key, Arrays.stream(texts).map(Util::toText).toArray(Text[]::new));
     }
 
+    public static Text getText(String key, String first, String[] args) {
+        String[] s = new String[1 + args.length];
+        s[0] = first;
+        System.arraycopy(args, 0, s, 1, args.length);
+        return getText(key, Arrays.stream(s).map(Util::toText).toArray(Text[]::new));
+    }
+
     public static void init() {
         try {
             Files.createDirectories(PluginConfig.cfgDir.resolve("lang"));

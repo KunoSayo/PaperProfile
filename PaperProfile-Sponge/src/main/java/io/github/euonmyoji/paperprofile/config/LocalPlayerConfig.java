@@ -52,17 +52,21 @@ public class LocalPlayerConfig implements IPlayerConfig {
 
     @Override
     public AttributeValue getAttribute(IPaperAttribute attribute) {
-        return null;
+        return new AttributeValue(attribute, cfg.getNode(attribute.getKey()).getString(attribute.getDefault()));
     }
 
     @Override
     public void setAttribute(IAttributeValue attributeValue) {
-
+        cfg.getNode(attributeValue.getAttribute().getKey()).setValue(attributeValue.getValue());
     }
 
     @Override
     public BuffValue getBuff(IPaperBuff buff) {
-        return null;
+        if (cfg.getNode(buff.getKey()).isVirtual()) {
+            return null;
+        } else {
+            return new BuffValue(buff, cfg.getNode(buff.getKey()));
+        }
     }
 
     @Override
@@ -94,6 +98,11 @@ public class LocalPlayerConfig implements IPlayerConfig {
             PaperProfile.logger.warn("error when saving plugin config", e);
         }
         return false;
+    }
+
+    @Override
+    public boolean hasBuff(IPaperBuff buff) {
+        return !cfg.getNode(buff.getKey()).isVirtual();
     }
 
     private void loadNode() {

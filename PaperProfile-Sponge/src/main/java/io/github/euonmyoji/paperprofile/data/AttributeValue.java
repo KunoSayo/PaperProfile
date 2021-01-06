@@ -1,6 +1,7 @@
 package io.github.euonmyoji.paperprofile.data;
 
 import io.github.euonmyoji.paperprofile.common.data.IAttributeValue;
+import io.github.euonmyoji.paperprofile.common.data.IPaperAttribute;
 
 /**
  * immutable attribute value
@@ -8,17 +9,26 @@ import io.github.euonmyoji.paperprofile.common.data.IAttributeValue;
  * @author yinyangshi
  */
 public class AttributeValue implements IAttributeValue {
-    public final PaperAttribute paperAttribute;
+    public final IPaperAttribute paperAttribute;
     public final String value;
     public final int vn;
 
-    public AttributeValue(PaperAttribute paperAttribute, String value) {
+    public AttributeValue(IPaperAttribute paperAttribute, String value) {
         this.paperAttribute = paperAttribute;
-        this.value = value;
-        if (paperAttribute.type.isNumber()) {
-            this.vn = Integer.parseInt(value);
+        if (value == null) {
+            this.value = paperAttribute.getDefault();
+            if (paperAttribute.getType().isNumber()) {
+                vn = paperAttribute.getDefaultN();
+            } else {
+                this.vn = 0;
+            }
         } else {
-            this.vn = 0;
+            this.value = value;
+            if (paperAttribute.getType().isNumber()) {
+                this.vn = Integer.parseInt(value);
+            } else {
+                this.vn = 0;
+            }
         }
     }
 
@@ -30,5 +40,20 @@ public class AttributeValue implements IAttributeValue {
     @Override
     public int getValueN() {
         return vn;
+    }
+
+    @Override
+    public IPaperAttribute getAttribute() {
+        return paperAttribute;
+    }
+
+    @Override
+    public IAttributeValue withValue(int c) {
+        return new AttributeValue(paperAttribute, String.valueOf(c));
+    }
+
+    @Override
+    public IAttributeValue withValue(String v) {
+        return new AttributeValue(paperAttribute, v);
     }
 }

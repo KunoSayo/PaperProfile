@@ -112,4 +112,8 @@ public class PluginConfig {
         }
         return playerConfig;
     }
+
+    public static void removePlayerCache(UUID uuid) {
+        playerConfigs.remove(uuid);
+    }
 }

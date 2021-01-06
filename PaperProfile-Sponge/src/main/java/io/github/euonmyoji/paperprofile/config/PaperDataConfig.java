@@ -20,6 +20,9 @@ import java.util.regex.Pattern;
  * @author yinyangshi
  */
 public final class PaperDataConfig {
+    public static final String ATTRIBUTES_KEY = "attributes";
+    public static final String BUFFS_KEY = "buffs";
+
     public static final HashMap<String, PaperAttribute> attributes = new HashMap<>();
     public static final HashMap<String, PaperBuff> buffs = new HashMap<>();
     private static final Pattern VAR_PATTERN = Pattern.compile("%(?<type>[ab])_(?<key>.*?)_(?<value>.*)%");
@@ -43,7 +46,7 @@ public final class PaperDataConfig {
 
         attributes.clear();
         buffs.clear();
-        cfg.getNode("attributes").getChildrenMap().forEach((o, node) -> {
+        cfg.getNode(ATTRIBUTES_KEY).getChildrenMap().forEach((o, node) -> {
             String key = o.toString();
             if (!attributes.containsKey(key)) {
                 try {
@@ -54,7 +57,7 @@ public final class PaperDataConfig {
             }
         });
 
-        cfg.getNode("buffs").getChildrenMap().forEach((o, node) -> {
+        cfg.getNode(BUFFS_KEY).getChildrenMap().forEach((o, node) -> {
             String key = o.toString();
             try {
                 buffs.put(key, new PaperBuff(key, node));
@@ -97,7 +100,7 @@ public final class PaperDataConfig {
             return false;
         }
         attributes.put(paperAttribute.key, paperAttribute);
-        paperAttribute.saveTo(cfg.getNode("attribute", paperAttribute.key));
+        paperAttribute.saveTo(cfg.getNode(ATTRIBUTES_KEY));
         return true;
     }
 
@@ -106,17 +109,20 @@ public final class PaperDataConfig {
             return false;
         }
         buffs.put(buff.key, buff);
-        buff.saveTo(cfg.getNode("buffs", buff.key));
+        buff.saveTo(cfg.getNode(BUFFS_KEY));
         return true;
     }
 
     public static PaperAttribute deleteAttribute(String key) {
         PaperAttribute t = attributes.remove(key);
-        cfg.getNode("attributes").removeChild(key);
+        cfg.getNode(ATTRIBUTES_KEY).removeChild(key);
         return t;
     }
 
     public static String parse(IPlayerConfig playerConfig, String v) {
+        if (playerConfig == null || v == null) {
+            return v;
+        }
         Matcher matcher = VAR_PATTERN.matcher(v);
         StringBuilder sb = new StringBuilder();
         int start = 0;
@@ -151,16 +157,16 @@ public final class PaperDataConfig {
                     }
                 }
             } else {
-                //%b_key_name-key-value%
-                String[] args = value.split("-", 3);
-                if (args.length <= 2) {
+                //%b_key_name_key_value%
+                String[] args = value.split("_", 2);
+                if (args.length == 1) {
                     sb.append(v, matcher.start(), matcher.end());
                 } else {
-                    PaperAttribute attribute = buffs.get(key).values.get(args[1]);
+                    PaperAttribute attribute = buffs.get(key).values.get(args[0]);
                     if (attribute == null) {
                         sb.append(v, matcher.start(), matcher.end());
                     } else {
-                        switch (args[2]) {
+                        switch (args[1]) {
                             case "max": {
                                 sb.append(attribute.max.get(playerConfig));
                                 break;
@@ -192,7 +198,7 @@ public final class PaperDataConfig {
 
     public static PaperBuff deleteBuff(String key) {
         PaperBuff buf = buffs.remove(key);
-        cfg.getNode("buffs").removeChild(key);
+        cfg.getNode(BUFFS_KEY).removeChild(key);
         return buf;
     }
 }

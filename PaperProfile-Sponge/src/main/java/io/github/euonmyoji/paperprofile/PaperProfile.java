@@ -8,6 +8,7 @@ import org.spongepowered.api.Sponge;
 import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
+import org.spongepowered.api.event.game.GameReloadEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
 import org.spongepowered.api.event.network.ClientConnectionEvent;
@@ -17,6 +18,7 @@ import org.spongepowered.api.scheduler.Task;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.UUID;
 
 /**
  * @author yinyangshi
@@ -54,11 +56,28 @@ public class PaperProfile {
         Sponge.getCommandManager().register(this, Command.DICE, "r", "rd", "roll", "rolldice");
         Sponge.getCommandManager().register(this, Command.DICE_HIDE, "rh", "rollhide");
         Sponge.getCommandManager().register(this, Command.NN, "nn", "name");
+        Sponge.getCommandManager().register(this, Command.A, "st");
     }
 
     @Listener
     public void onJoin(ClientConnectionEvent.Join event) {
         Player player = event.getTargetEntity();
         Task.builder().async().execute(() -> PluginConfig.getPlayerConfig(player.getUniqueId()).init(player.getName())).submit(this);
+    }
+
+    @Listener
+    public void onReload(GameReloadEvent reloadEvent) {
+        PluginConfig.reload();
+    }
+
+    @Listener
+    public void onLeave(ClientConnectionEvent.Disconnect event) {
+        event.getTargetEntity();
+        Player player = event.getTargetEntity();
+        UUID uuid = player.getUniqueId();
+        Task.builder().async().execute(() -> {
+            PluginConfig.getPlayerConfig(uuid).save();
+            PluginConfig.removePlayerCache(uuid);
+        }).submit(this);
     }
 }

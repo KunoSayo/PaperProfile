@@ -7,4 +7,6 @@ import io.github.euonmyoji.paperprofile.common.config.IPlayerConfig;
  */
 public interface IOptionNumber {
     int get(IPlayerConfig value);
+
+    String getInfo(IPlayerConfig playerConfig);
 }

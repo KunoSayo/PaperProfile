@@ -26,13 +26,13 @@ public class ValueTypeArg extends CommandElement {
     @Override
     protected Object parseValue(CommandSource source, CommandArgs args) throws ArgumentParseException {
         String next = args.next();
-        String[] values = next.split(",");
         try {
-            if (values.length == 1) {
-                return ValueType.valueOf(values[0].toUpperCase());
-            } else {
-                return Arrays.stream(values).map(s -> s.split("-", 2))
+            if (next.contains("_")) {
+                String[] values = next.split(",");
+                return Arrays.stream(values).map(s -> s.split("_", 2))
                         .collect(Collectors.toMap(strings -> strings[0], strings -> ValueType.valueOf(strings[1].toUpperCase())));
+            } else {
+                return ValueType.valueOf(next);
             }
         } catch (Exception ee) {
             ArgumentParseException e = args.createError(Text.of("cannot be parsed to value-type"));
@@ -48,12 +48,12 @@ public class ValueTypeArg extends CommandElement {
             Optional<String> next = args.nextIfPresent();
             if (next.isPresent()) {
                 String arg = next.get();
-                int idx = arg.lastIndexOf("-");
+                int idx = arg.lastIndexOf("_");
                 int lastDot = arg.lastIndexOf(",");
                 if (idx == -1 || lastDot > idx) {
                     List<String> list = new ArrayList<>();
                     for (ValueType value : ValueType.values()) {
-                        list.add(arg + "-" + value.toString().toLowerCase());
+                        list.add(arg + "_" + value.toString().toLowerCase());
                     }
                     return list;
                 } else {

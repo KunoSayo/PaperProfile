@@ -35,7 +35,8 @@
   * 设置名字
 * /pp show \[attribute]
   * 显示信息/属性
-
+* /pp a \<attribute> <op> <dice> \[message]
+  * 更改属性
 
 # Attribute 属性
 ```
@@ -51,7 +52,7 @@
     #可通过ref开头引用某个属性
     max = 0x7fffffff
     
-    display = "属性{0}: "
+    display = "属性{0}: %a_属性key_value%"
     item = "展示用物品 默认为paper"
 }
 ```
@@ -72,6 +73,11 @@
     }
     gt_op = "[<attribute|buff> <key> <op> <expr>]"
     
+    display="[状态]{0}"
     item = "展示用物品 默认为paper"
 }
 ```
+
+# Thought.
+臃肿 没文档 的代码
+无意义的套娃
