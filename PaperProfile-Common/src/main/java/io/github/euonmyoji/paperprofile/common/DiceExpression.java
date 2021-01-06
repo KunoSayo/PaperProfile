@@ -101,7 +101,9 @@ public class DiceExpression {
                         }
                         DiceExpression diceExpression = new DiceExpression(s.substring(start, i), false);
                         child.add(new DiceExpression(lv, diceExpression, op));
-                        rootStart = i + 1;
+                        rootStart = i;
+                        //make next point op
+                        i -= 1;
                         break;
                     }
                     default: {

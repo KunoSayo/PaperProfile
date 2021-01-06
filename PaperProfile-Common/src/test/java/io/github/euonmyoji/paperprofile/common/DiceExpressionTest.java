@@ -29,6 +29,17 @@ class DiceExpressionTest {
         r = diceExpression.getTotalResult();
         Assertions.assertEquals(-1, r);
         Assertions.assertEquals("1*-1", diceExpression.toString());
+
+        diceExpression = new DiceExpression("1+1d1*1d1+5");
+        r = diceExpression.getTotalResult();
+        Assertions.assertEquals(7, r);
+        Assertions.assertEquals("1+1*1+5", diceExpression.toString());
+    }
+
+    @Test
+    void testBoomed() throws DiceException {
+        DiceExpression diceExpression;
+        int r;
     }
 
     @Test
