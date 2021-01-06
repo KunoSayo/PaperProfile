@@ -28,7 +28,7 @@ import static org.spongepowered.api.text.Text.of;
 /**
  * @author yinyangshi
  */
-public class GameMasterCommand {
+class GameMasterCommand {
     static final CommandSpec ADD = CommandSpec.builder()
             .arguments(GenericArguments.choices(of("what"), () -> ImmutableList.of("attribute", "buff"), s -> s),
                     GenericArguments.string(of("key")),

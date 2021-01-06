@@ -32,7 +32,7 @@ public class ValueTypeArg extends CommandElement {
                 return Arrays.stream(values).map(s -> s.split("_", 2))
                         .collect(Collectors.toMap(strings -> strings[0], strings -> ValueType.valueOf(strings[1].toUpperCase())));
             } else {
-                return ValueType.valueOf(next);
+                return ValueType.valueOf(next.toUpperCase());
             }
         } catch (Exception ee) {
             ArgumentParseException e = args.createError(Text.of("cannot be parsed to value-type"));
