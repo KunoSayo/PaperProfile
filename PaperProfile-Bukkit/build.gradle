@@ -1,0 +1,60 @@
+plugins {
+    id 'java'
+    id 'ninja.miserable.blossom' version '1.0.1'
+    id 'com.github.johnrengelman.shadow' version '2.0.4'
+}
+
+group 'io.github.euonmyoji.paperprofile'
+version '0.0.1'
+
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    shade
+    implementation.extendsFrom(shade)
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+repositories {
+    mavenCentral()
+}
+
+blossom {
+    replaceToken('@pluginVersion@', version)
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    shade project(':PaperProfile-Common')
+}
+
+repositories {
+    mavenCentral()
+}
+
+shadowJar() {
+    configurations = [project.configurations.shade]
+    from sourceSets.main.output
+    classifier = ""
+}
+
+artifacts {
+    archives shadowJar
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar.setEnabled(true)
+buildDir = '../build/bukkit'

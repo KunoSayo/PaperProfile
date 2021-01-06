@@ -1,0 +1,14 @@
+build
+.classpath
+.gradle
+.maven
+.idea
+.vsc
+.vs
+
+
+*.jar
+*.class
+/**/out
+/**/build
+/**/libs

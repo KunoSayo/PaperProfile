@@ -1,0 +1,29 @@
+apply plugin: 'java'
+
+
+group 'io.github.euonmyoji.paperprofile'
+version '0.1.0'
+
+//Why Sponge is STILLLLLLLLLLLLLLL J8888888888888888【1.12.2】
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+defaultTasks 'clean', 'build'
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+repositories {
+    mavenCentral()
+
+    maven {
+        name = 'sponge'
+        url = 'https://repo.spongepowered.org/maven'
+    }
+}
+
+dependencies {
+}
+
+jar.setEnabled(false)

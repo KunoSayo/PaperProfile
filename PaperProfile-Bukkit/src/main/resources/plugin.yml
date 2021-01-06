@@ -1,0 +1,11 @@
+name: PaperProfile
+main: io.github.euonmyoji.paperprofile.bukkit.PaperProfile
+version: 0.0.1
+commands:
+  roll:
+    description: rd
+    usage: /rd 1d6
+    aliases:
+      - r
+      - rd
+      - rolldice

@@ -1,0 +1,5 @@
+rootProject.name = 'PaperProfile'
+include 'PaperProfile-Common'
+include 'PaperProfile-Sponge'
+include 'PaperProfile-Bukkit'
+

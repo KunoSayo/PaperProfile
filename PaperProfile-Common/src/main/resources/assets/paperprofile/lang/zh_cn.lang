@@ -1,0 +1,34 @@
+pp.dice.result=&e[&b骰娘&e] {&a0}&b掷骰: {1}={2}={3}
+pp.dice.result.single=&e[&b骰娘&e] {&a0}&b掷骰: {1}={2}
+pp.dice.result.reason=&e[&b骰娘&e] {0}掷骰 {4}: {1}={2}={3}
+pp.dice.result.reason.single=&e[&b骰娘&e] {&a0}&b掷骰: {1}={2}
+pp.dice.hide=&e[&b骰娘&e] {0}进行了一次暗骰
+pp.dice.hide.gm=&e[&b骰娘&e] {0}进行了一次暗骰: {1}={2}={3}
+pp.dice.hide.gm.reason=&e[&b骰娘&e] {0}执行了一次暗骰 {4}: {1}={2}={3}
+pp.dice.expr.e=&e[&b骰娘&e] 表达式{0}不正确。
+pp.dice.expr.bm=&e[&b骰娘&e] 表达式{0}的括号不匹配。
+pp.dice.expr.om=&e[&b骰娘&e] 表达式{0}的运算不匹配。
+pp.dice.expr.cd=&e[&b骰娘&e] 不存在{1}个骰子来处理{0}！
+pp.dice.expr.nd=&e[&b骰娘&e] 没有{1}面数的骰子来处理{0}！
+pp.buff.gt.a.add=&e[&b骰娘&e] 玩家{0}属性{1}&r&e{2} -> {3} + ({4}={5}={6})
+pp.buff.gt.a.sub=&e[&b骰娘&e] 玩家{0}属性{1}&r&e{2} -> {3} - ({4}={5}={6})
+pp.buff.gt.a.set=&e[&b骰娘&e] 玩家{0}属性{1}&r&e{2} -> {3} = ({4}={5}={6})
+pp.buff.gt.b.add=&e[&b骰娘&e] 玩家{0}状态{1}的{7}&r&e{2} -> {3} + ({4}={5}={6})
+pp.buff.gt.b.sub=&e[&b骰娘&e] 玩家{0}状态{1}的{7}&r&e{2} -> {3} - ({4}={5}={6})
+pp.buff.gt.b.set=&e[&b骰娘&e] 玩家{0}状态{1}的{7}&r&e{2} -> {3} = ({4}={5}={6})
+pp.gm.add.suc=&e[&b骰娘&e] 已将{0}添加进gm名单了。
+pp.gm.add.err=&e[&b骰娘&e] {0}已经在gm名单！
+pp.gm.rm.suc=&e[&b骰娘&e] 已将{0}移除出gm名单了。
+pp.gm.rm.err=&e[&b骰娘&e] {0}不在gm名单！
+pp.gm.att.add.suc=&e[&b骰娘&e] 添加属性{0}成功。
+pp.gm.att.add.err=&e[&b骰娘&e] 添加属性{0}失败，{1}。
+pp.gm.att.del.suc=&e[&b骰娘&e] 删除属性{0}成功。
+pp.gm.att.del.err=&e[&b骰娘&e] 删除属性{0}失败，{1}。
+pp.gm.buf.add.suc=&e[&b骰娘&e] 添加状态{0}成功。
+pp.gm.buf.add.err=&e[&b骰娘&e] 添加状态{0}失败，{1}。
+pp.gm.buf.del.suc=&e[&b骰娘&e] 删除状态{0}成功。
+pp.gm.buf.del.err=&e[&b骰娘&e] 删除状态{0}失败，{1}。
+pp.pd=&e[&b骰娘&e] 你是我的Master嘛？
+pp.pp={0}的卡片
+pp.nn=已将{0}的名称更改为{1}√
+pp.nn.err=更改{0}的名称好像保存失败了...

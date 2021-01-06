@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+group 'io.github.euonmyoji.paperprofile'
+version '0.1.0'
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+jar.setEnabled(true)
+
+buildDir = '../build/common'
