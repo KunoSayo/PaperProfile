@@ -90,31 +90,6 @@ public class GameMasterCommand {
                 return success();
             })
             .build();
-    static final CommandSpec LIST = CommandSpec.builder()
-            .arguments(GenericArguments.choices(of("what"), () -> ImmutableList.of("attribute", "buff"), s -> s),
-            .executor((src, args) -> {
-                if (src instanceof Identifiable) {
-                    if (PluginConfig.isGm(((Identifiable) src).getUniqueId())) {
-                        String what = args.<String>getOne("what").orElseThrow(IllegalArgumentException::new);
-                        PaginationList.Builder builder = PaginationList.builder()
-                                .title(of("属性"))
-                                .padding(of("-"));
-                        List<Text> textList = new ArrayList<>();
-                        if ("attribute".equals(what)) {
-                            for (PaperAttribute value : PaperDataConfig.attributes.values()) {
-                                textList.add(value.getText());
-                            }
-                        } else {
-                            for (PaperBuff value : PaperDataConfig.buffs.values()) {
-                                textList.add(value.getText());
-                            }
-                        }
-                        builder.contents(textList).build().sendTo(src);
-                    }
-                }
-                return empty();
-            })
-            .build();
     static final CommandSpec DELETE = CommandSpec.builder()
             .arguments(GenericArguments.choices(of("what"), () -> ImmutableList.of("attribute", "buff"), s -> s),
                     GenericArguments.string(of("key")))
@@ -159,6 +134,31 @@ public class GameMasterCommand {
                     }
                 }
                 return success();
+            })
+            .build();
+    private static final CommandSpec LIST = CommandSpec.builder()
+            .arguments(GenericArguments.choices(of("what"), () -> ImmutableList.of("attribute", "buff"), s -> s))
+            .executor((src, args) -> {
+                if (src instanceof Identifiable) {
+                    if (PluginConfig.isGm(((Identifiable) src).getUniqueId())) {
+                        String what = args.<String>getOne("what").orElseThrow(IllegalArgumentException::new);
+                        PaginationList.Builder builder = PaginationList.builder()
+                                .title(of("属性"))
+                                .padding(of("-"));
+                        List<Text> textList = new ArrayList<>();
+                        if ("attribute".equals(what)) {
+                            for (PaperAttribute value : PaperDataConfig.attributes.values()) {
+                                textList.add(value.getText());
+                            }
+                        } else {
+                            for (PaperBuff value : PaperDataConfig.buffs.values()) {
+                                textList.add(value.getText());
+                            }
+                        }
+                        builder.contents(textList).build().sendTo(src);
+                    }
+                }
+                return empty();
             })
             .build();
     private static final CommandSpec JOIN = CommandSpec.builder()
